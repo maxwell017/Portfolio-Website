@@ -1,12 +1,11 @@
-# Stage 1: Build the React app
-FROM node:alpine AS build
+FROM node:latest
 WORKDIR /app
 
 # Copy only package.json and package-lock.json
 COPY package*.json ./
 
-# Install only production dependencies
-RUN npm ci --production
+
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
@@ -14,9 +13,6 @@ COPY . .
 # Build the app
 RUN npm run build
 
-# Stage 2: Serve the app with Nginx
-FROM nginx:alpine
-RUN rm -rf /usr/share/nginx/html/*
+EXPOSE 3000
 
-# Copy the built React app from the previous stage
-COPY --from=build /app/build /usr/share/nginx/html
+CMD["npm", "run",  "start"]
