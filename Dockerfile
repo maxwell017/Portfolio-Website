@@ -4,7 +4,6 @@ WORKDIR /app
 # Copy only package.json and package-lock.json
 COPY package*.json ./
 
-
 RUN npm install
 
 # Copy the rest of the application code
@@ -15,4 +14,5 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD["npm", "run",  "start"]
+# Correct CMD syntax
+CMD ["npm", "run", "start"]
